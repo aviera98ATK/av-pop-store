@@ -9,6 +9,16 @@
 
 }
 
+
 nav ul a{
     font-size:1.3rem;
+}
+
+.container{
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+
 }

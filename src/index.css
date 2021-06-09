@@ -22,3 +22,17 @@ nav ul a{
     justify-content: center;
 
 }
+
+.item-count-container{
+    padding: 0px 10px;
+    width: 100%;
+    border: 1px solid rgba(0,0,0, 0.1)
+}
+
+.item-count-btn{
+    width:100%;
+}
+
+.item-count{
+    text-align:center;
+}

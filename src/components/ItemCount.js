@@ -32,7 +32,7 @@ const ItemCount = ({ stock, initial, onAdd }) => {
                     </div>
                     <div className="col s3">
                         <button 
-                            onClick={ () => { onAdd(); setCounter(counter + 1); }} 
+                            onClick={ () => { setCounter(counter + 1); }} 
                             class="waves-effect waves-teal btn-flat btn-small"
                             disabled={addDisabled}
                         >
@@ -42,7 +42,14 @@ const ItemCount = ({ stock, initial, onAdd }) => {
                 </div>
                 <div className="col s12"> <hr/> </div>
                 <div className="col s12">
-                    <button className="waves-effect waves-light btn item-count-btn" type="submit" name="action">Add to Cart!</button>
+                    <button 
+                        onClick = {() => onAdd(counter)} 
+                        className="waves-effect waves-light btn item-count-btn" 
+                        type="submit" 
+                        name="action"
+                    >
+                        Add to Cart!
+                    </button>
                 </div>
             </div>
             

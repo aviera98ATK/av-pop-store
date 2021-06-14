@@ -4,29 +4,58 @@
 
 }
 
-.brand-logo{
-    margin-left: 15px;
-
-}
-
-
 nav ul a{
     font-size:1.3rem;
 }
 
+.brand-logo{
+    margin-left: 15px;
+}
+
+.page-title{
+    text-align: center;
+}
+
+.progress{
+    margin: 0px !important; 
+}
+.card-title{
+    margin-bottom: 0px !important;
+}
+.card-price{
+    margin-bottom: 10px;
+}
 .container{
     width: 100%;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: center;
-
+    text-align: center;
 }
 
 .item-count-container{
     padding: 0px 10px;
     width: 100%;
     border: 1px solid rgba(0,0,0, 0.1)
+}
+
+.card {
+    height: 450px;
+}
+.card .card-image{
+    height: 300px;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+.card .card-content .card-price {
+    font-size: 1.5em;
+}
+
+
+.item-count-container blockquote{
+    text-align: left;
 }
 
 .item-count-btn{

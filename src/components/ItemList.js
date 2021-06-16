@@ -15,7 +15,8 @@ const ItemList = ({ items }) => {
                                 title={item.title}
                                 price={item.price} 
                                 pictureURL={item.pictureURL}
-                                description={item.description}    
+                                description={item.description}
+                                stock={item.stock}
                             />
                         )
                     })

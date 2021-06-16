@@ -4,10 +4,22 @@
 
 }
 
+body{
+    background-color: rgba(0,0,0, 0.1) !important;
+
+}
+
+nav{
+    z-index: 999 !important;
+}
+
 nav ul a{
     font-size:1.3rem;
 }
 
+p{
+  font-family: Arial, Helvetica, sans-serif;   
+}
 .brand-logo{
     margin-left: 15px;
 }
@@ -25,14 +37,30 @@ nav ul a{
 .card-price{
     margin-bottom: 10px;
 }
+
 .container{
     width: 100%;
+    margin-top:25px;
+}
+
+.row{
+    background-color: #fff;
+}
+
+.justify-center{
+    justify-content: center;
+}
+
+.align-center{
+    align-items: center;
     display: flex;
     flex-flow: row wrap;
-    align-items: center;
-    justify-content: center;
+}
+
+.text-center{
     text-align: center;
 }
+
 
 .item-count-container{
     padding: 0px 10px;
@@ -42,6 +70,12 @@ nav ul a{
 
 .card {
     height: 450px;
+
+}
+.card:hover {
+    box-shadow: 0 4px 4px 0 rgb(0 0 0 / 14%), 0 6px 2px -4px rgb(0 0 0 / 12%), 0 2px 10px 2px rgb(0 0 0 / 20%);
+    transition: box-shadow .25s, -webkit-box-shadow .25s;
+    cursor:pointer;
 }
 .card .card-image{
     height: 300px;
@@ -64,4 +98,31 @@ nav ul a{
 
 .item-count{
     text-align:center;
+}
+
+.item-detail-picture{
+    width: 100%;
+}
+
+.item-detail-picture-container{
+    padding-top:25px !important;
+    /* padding: 25px 0px !important; */
+    overflow: hidden;
+}
+
+.product-detail-title{
+    font-size: 1.8em;
+    margin: 0;
+}
+
+.product-detail-price{
+    font-size: 2.5em;
+}
+
+.product-detail-description{
+    font-size: 1.8em;
+}
+
+.item-detail-info-container{
+    padding-top: 25px !important;
 }

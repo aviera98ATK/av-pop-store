@@ -1,4 +1,4 @@
-const Item = ({ id, title, price, pictureURL, description}) => {
+const Item = ({ id, title, price, pictureURL }) => {
     return(
         <div className="col s12 m3" key={id}>
             <div className="card">

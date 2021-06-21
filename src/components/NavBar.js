@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import CartWidget from './CartWidget'
+import { Link } from 'react-router-dom'
 import M from 'materialize-css'
 
-function NavBar() {
+function NavBar({ categories }) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -13,24 +14,27 @@ function NavBar() {
 
             setLoaded(true);
         }
+    }, []);
 
-        
-    }, [])
     return(
         <>
             <ul id="dropdown1" className="dropdown-content">
-                <li><a href="#!">All</a></li>
+                <li><Link exact to={"/"}> All </Link></li>
                 <li className="divider"></li>
-                <li><a href="#!">Pre-Orders</a></li>
-                <li><a href="#!">Cooming Soon</a></li>
+                {
+                    categories.map(category => {
+                        return (
+                            <li key={category.id}><Link exact to={`/category/${category.id}`}> { category.name } </Link></li>
+                        )
+                    })
+                }
             </ul>
             <nav>
                 <div className="nav-fixed">
-                    <a href="#" className="brand-logo">AV PopStore</a>
+                    <Link exact to={"/"} className="brand-logo"> AV PopStore </Link>
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
-                        <li><a href="#">Inicio</a></li>
+                        <li><Link exact to={"/"}> Inicio </Link></li>
                         <li><a href="#" className='dropdown-trigger' data-target='dropdown1'>Productos <i className="material-icons right">arrow_drop_down</i></a></li>
-                        <li><a href="#">Contacto</a></li>
                         <li><CartWidget/></li>
                     </ul>
                 </div>

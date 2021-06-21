@@ -4,13 +4,14 @@ const ItemList = ({ items }) => {
 
 
     return(
-        <div className="row">
+        <div className="row item-list">
             {
-                (items && Array.isArray(items))
+                (items && (Array.isArray(items) && items.length > 0))
                 ?
                     items.map(item => {
                         return (
                             <Item 
+                                key={item.id}
                                 id={item.id} 
                                 title={item.title}
                                 price={item.price} 

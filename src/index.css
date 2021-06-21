@@ -1,12 +1,16 @@
 * {
     font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
 
 }
 
 body{
     background-color: rgba(0,0,0, 0.1) !important;
 
+}
+
+a{
+    Color: #000;
 }
 
 nav{
@@ -33,6 +37,7 @@ p{
 }
 .card-title{
     margin-bottom: 0px !important;
+    
 }
 .card-price{
     margin-bottom: 10px;
@@ -125,4 +130,26 @@ p{
 
 .item-detail-info-container{
     padding-top: 25px !important;
+}
+
+.item-list, .item-detail{
+    min-height: 600px;
+}
+
+.item-breadcrums label{
+    font-size:1em;
+}
+
+.item-breadcrums a{
+    padding: 5px;
+    font-size:1em;
+    color:#ee6e73;
+}
+
+.item-breadcrums a:hover {
+    text-decoration: underline;
+}
+
+.item-breadcrum-selected {
+    color: #000 !important;
 }

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
 import ItemList from './ItemList'
 
 const productList = [
@@ -9,6 +10,8 @@ const productList = [
         pictureURL: "https://http2.mlstatic.com/D_NQ_NP_781717-MLA44016983708_112020-O.webp",
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
         stock: 10,
+        category: 'Pre-Order',
+        categoryId: 1
     },
     {
         id: 2,
@@ -16,7 +19,9 @@ const productList = [
         price: "$4.500",
         pictureURL:"https://d3ugyf2ht6aenh.cloudfront.net/stores/956/823/products/feb867d3-0500-44d6-96b0-f6a12f3cb835-35f17c98c9c1b7c08a15989908896410-1024-1024.jpg",
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
-        stock:33
+        stock:33,
+        category: 'Pre-Order',
+        categoryId: 1
     },
     {
         id: 3,
@@ -24,7 +29,9 @@ const productList = [
         price: "$4.000" ,
         pictureURL:"https://proxyworld.com.ar/wp-content/uploads/2020/02/funko-pop-301-rick-and-morty-beth-D_NQ_NP_668907-MLA31098724454_062019-F_resultado.jpg" ,
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
-        stock: 21
+        stock: 21,
+        category: 'Pre-Order',
+        categoryId: 1
     },
     {
         id: 4,
@@ -32,7 +39,9 @@ const productList = [
         price: "$6.000",
         pictureURL: "https://static1.funidelia.com/301994-f6_big2/funko-pop-hulk-vengadores-endgame.jpg" ,
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
-        stock: 2
+        stock: 2,
+        category: 'Coming Soon',
+        categoryId: 2
     },
     {
         id: 5,
@@ -40,7 +49,9 @@ const productList = [
         price: "$7.000",
         pictureURL: "https://http2.mlstatic.com/D_NQ_NP_610155-MLA44208347816_112020-O.jpg" ,
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
-        stock:32 
+        stock:32 ,
+        category: 'Coming Soon',
+        categoryId: 2
     },
     {
         id: 6,
@@ -48,7 +59,9 @@ const productList = [
         price: "$3.500",
         pictureURL: "https://i.linio.com/p/62ae142cd46e7cbc8ac6c82ca0715434-product.jpg" ,
         description: "Estas figuras normalmente tienen un tamaño de 3,75 pulgadas, lo que serían 10 cm aproximadamente.",
-        stock: 100
+        stock: 100,
+        category: 'Coming Soon',
+        categoryId: 2
     }
 ]
 
@@ -56,20 +69,28 @@ const ItemListContainer = ({ greeting }) => {
 
     const[items, setItems] = useState(null);
     const[dataLoaded, setDataLoaded] = useState(false);
-
+    const { categoryId } = useParams();
 
     //get products task
     //wait 2 seconds to resolve
     //then set items hook and setDataLoaded to remove loading
-    const getProducts = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve(productList);
-        }, 2000);
-    })
-    .then((data) => {
-        setItems(data);
-        setDataLoaded(true); 
-    });
+    useEffect(() => {
+        setDataLoaded(false);
+
+        const getProducts = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                let products = (categoryId) ? productList.filter(product => product.categoryId == categoryId) : [...productList];
+                
+                console.log(products, categoryId)
+                resolve(products);
+            }, 2000);
+        })
+        .then((data) => {
+            setItems(data);
+            setDataLoaded(true); 
+        });
+    }, [categoryId]);
+    
 
     return(
         <>
@@ -80,11 +101,13 @@ const ItemListContainer = ({ greeting }) => {
                 </div>
             }
             
-            <div className="container text-center justify-center align-center">
+            <div className="container text-center item-list-container">
                 <div className="row">
-                    <div className="col s12 page-title">{ greeting }</div>
+                    <div className="col s12 m12 page-title">{ greeting }</div>
                     <br />
-                    <ItemList items={items}/>
+                    <div className="col s12 m12">
+                        { dataLoaded && <ItemList items={items}/> }
+                    </div>
                 </div>
             </div>
         </>

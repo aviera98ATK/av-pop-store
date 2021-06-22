@@ -81,7 +81,7 @@ const ItemListContainer = ({ greeting }) => {
             setTimeout(() => {
                 let products = (categoryId) ? productList.filter(product => product.categoryId == categoryId) : [...productList];
                 
-                console.log(products, categoryId)
+                console.log(products);
                 resolve(products);
             }, 2000);
         })

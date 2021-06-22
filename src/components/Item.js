@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 const Item = ({ id, title, price, pictureURL }) => {
     return (
-        <Link exact to={`/item/${id}`}>
+        <Link to={`/item/${id}`}>
             <div className="col s12 m3" key={id}>
                 <div className="card">
                     <div className="card-image">

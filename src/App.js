@@ -22,7 +22,7 @@ function App() {
         <Route exact path={["/", "/category/:categoryId"]}>
           <ItemListContainer greeting={ <h1>Welcome to AV PopStore!</h1> }/>
         </Route>
-        <Route exact path="/item/:itemId">
+        <Route exact path={"/item/:itemId"}>
           <ItemDetailContainer />
         </Route>
       </Switch>

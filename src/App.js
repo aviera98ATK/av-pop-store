@@ -2,6 +2,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NavBar from './components/NavBar'
 import ItemListContainer from './components/ItemListContainer'
 import ItemDetailContainer from './components/ItemDetailContainer'
+import Cart from './components/Cart'
 
 const categories = [
   {
@@ -24,6 +25,9 @@ function App() {
         </Route>
         <Route exact path={"/item/:itemId"}>
           <ItemDetailContainer />
+        </Route>
+        <Route exact path={"/cart"}>
+          <Cart />
         </Route>
       </Switch>
     </BrowserRouter> 

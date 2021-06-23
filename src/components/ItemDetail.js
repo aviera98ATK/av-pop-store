@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import ItemCount from './ItemCount'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 
 const ItemDetail = ({ item }) => {
 
+    const[quantityAdded, setQuantityAdded] = useState(null) 
+    
     const onAdd = (quantity) => {
-        console.log(`Added ${quantity} units of the product.`);
+        setQuantityAdded(quantity);
     };
 
     return(
@@ -30,8 +33,12 @@ const ItemDetail = ({ item }) => {
 
                         <h4 className="product-detail-description">Description</h4>
                         <p>Lorem ipsum dolor sit amet consectetur adipiscing elit augue nibh ullamcorper diam, suscipit faucibus habitant proin rhoncus justo himenaeos eleifend vivamus senectus, sociosqu in hendrerit venenatis pretium cursus nulla interdum nisi potenti.</p>
-                        <div className="col s12 m8 offset-m2">
-                            <ItemCount stock={item.stock} initial = {1} onAdd = {onAdd}/>
+                        <div className="col s12 m8 offset-m2 text-center">
+                            {
+                                quantityAdded >= 1 
+                                ? <Link exact to={"/cart"} className="waves-effect waves-light btn item-count-btn" >Finish Buying</Link> 
+                                : <ItemCount stock={item.stock} initial={1} onAdd={onAdd}/>
+                            }
                         </div>
                     </div>
                 </>

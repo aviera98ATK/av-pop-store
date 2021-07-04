@@ -21,10 +21,10 @@ const ItemCount = ({ stock, initial, onAdd }) => {
                     <div className="col s3">
                         <button 
                             onClick={ () => { setCounter(counter - 1) }}
-                            class="waves-effect waves-teal btn-flat btn-small"
+                            className="waves-effect waves-teal btn-flat btn-small"
                             disabled={removeDisabled}
                         >
-                            <i class="material-icons">remove</i>
+                            <i className="material-icons">remove</i>
                         </button>
                     </div>
                     <div className="col s6 item-count">
@@ -33,10 +33,10 @@ const ItemCount = ({ stock, initial, onAdd }) => {
                     <div className="col s3">
                         <button 
                             onClick={ () => { setCounter(counter + 1); }} 
-                            class="waves-effect waves-teal btn-flat btn-small"
+                            className="waves-effect waves-teal btn-flat btn-small"
                             disabled={addDisabled}
                         >
-                            <i class="material-icons">add</i>
+                            <i className="material-icons">add</i>
                         </button>
                     </div>
                 </div>

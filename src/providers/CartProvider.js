@@ -14,11 +14,18 @@ const CartProvider = ({ defaultValue = [] , children}) =>
 
         if(isInCart(item.id))
         {
-            console.log("Item already exists in cart");
+            let items = [...cart];
+            let index = items.findIndex(elem => elem.item.id === item.id);
+            items[index].quantity = items[index].quantity + quantity;
+
+            setCart(items);
+
+            console.log(`Updated item [${item.title}] from cart. New quantity: [${items[index].quantity}]`)
+
             return;
         }
 
-        console.log(`add item to cart: ${item}`, item);
+        console.log(`add item to cart`, item);
 
         setCart([...cart, { item: item, quantity: quantity }]);
     }
@@ -32,13 +39,11 @@ const CartProvider = ({ defaultValue = [] , children}) =>
 
     function isInCart(id)
     {
-        console.log("isInCart called", id);
+        console.log(`isInCart called for item Id [${id}]`);
         let isIn = false;
         
         if(id != undefined)
             isIn = cart.find(obj => obj.item.id === id);
-
-        console.log(`isInCart: ${isIn}`);
 
         return (isIn === undefined) ? false : isIn;
     }

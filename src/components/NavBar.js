@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import CartWidget from './CartWidget'
 import { Link } from 'react-router-dom'
 import M from 'materialize-css'
 
+import CartContext from './../context/CartContext';
+
 function NavBar({ categories }) {
     const [loaded, setLoaded] = useState(false);
+    const { cartSize } = useContext(CartContext);
 
     useEffect(() => {
         if(!loaded)
@@ -35,7 +38,7 @@ function NavBar({ categories }) {
                     <ul id="nav-mobile" className="right hide-on-med-and-down">
                         <li><Link to={"/"}> Inicio </Link></li>
                         <li><a href="#" className='dropdown-trigger' data-target='dropdown1'>Productos <i className="material-icons right">arrow_drop_down</i></a></li>
-                        <li><CartWidget/></li>
+                        { cartSize > 0 && <li><CartWidget/></li> }
                     </ul>
                 </div>
             </nav>

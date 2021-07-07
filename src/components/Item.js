@@ -10,7 +10,7 @@ const Item = ({ id, title, price, pictureURL }) => {
                     </div>
                     <div className="card-content">
                         <span className="card-title">{title}</span>
-                        <label className="card-price">{price}</label>
+                        <label className="card-price">${price}</label>
                     </div>
                 </div>
             </div>

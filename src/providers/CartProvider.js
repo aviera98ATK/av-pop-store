@@ -32,8 +32,10 @@ const CartProvider = ({ defaultValue = [] , children}) =>
 
     function removeItem(id)
     {
-        let filteredItems = cart.filter(obj => obj.item.id != id);
+        console.log("call remoteItem");
+        let filteredItems = cart.filter(obj => obj.item.id !== id);
 
+        console.log(filteredItems);
         setCart(filteredItems);
     }
 
@@ -54,7 +56,7 @@ const CartProvider = ({ defaultValue = [] , children}) =>
     }
 
     return (
-        <CartContext.Provider value={{ cart, addItem, removeItem, clearCart, isInCart, itemsSize: cart.length }}>
+        <CartContext.Provider value={{ cart, addItem, removeItem, clearCart, isInCart, cartSize: cart.length }}>
             {children}
         </CartContext.Provider>
     )

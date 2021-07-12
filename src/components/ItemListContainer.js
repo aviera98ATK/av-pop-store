@@ -1,14 +1,13 @@
 //modules
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
+import { getFirestore } from './../firebase/index.js';
 
 //components
 import ItemList from './ItemList'
 
-//data
-import Products from './../data/Products.json'
-
-const productList = Products;
+const db = getFirestore();
+const itemCollection = db.collection('items');
 
 const ItemListContainer = ({ greeting }) => {
 
@@ -16,24 +15,34 @@ const ItemListContainer = ({ greeting }) => {
     const[dataLoaded, setDataLoaded] = useState(false);
     const { categoryId } = useParams();
 
-    //get products task
-    //wait 2 seconds to resolve
-    //then set items hook and setDataLoaded to remove loading
     useEffect(() => {
         setDataLoaded(false);
 
-        const getProducts = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let products = (categoryId) ? productList.filter(product => product.categoryId == categoryId) : [...productList];
-                
-                console.log(products);
-                resolve(products);
-            }, 2000);
-        })
-        .then((data) => {
-            setItems(data);
-            setDataLoaded(true); 
-        });
+        let callback = (querySnapshot) => {
+            if (querySnapshot.size === 0) {
+                console.log('No results');
+                setDataLoaded(true);
+            }
+
+            console.log(querySnapshot);
+            setItems(querySnapshot.docs.map(doc => {
+                let data = doc.data();
+                data.id = doc.id;
+
+                return data;
+            }));
+            setDataLoaded(true);
+        };
+
+        if(categoryId)
+        {
+            //parse param to int due that firestore field is of type number
+            let categoryIdParam = Number.parseInt(categoryId);
+            itemCollection.where("categoryId", "==", categoryIdParam).get().then(callback);
+        }
+        else
+            itemCollection.get().then(callback);
+
     }, [categoryId]);
     
 

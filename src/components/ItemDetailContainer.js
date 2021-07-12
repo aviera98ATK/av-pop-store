@@ -1,14 +1,13 @@
 //modules
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom'
+import { getFirestore } from './../firebase/index.js';
 
 //components
 import ItemDetail from './ItemDetail'
 
-//data
-import Products from './../data/Products.json'
-
-const productsList = Products;
+const db = getFirestore();
+const itemCollection = db.collection('items');
 
 const ItemDetailContainer = () => {
 
@@ -18,21 +17,28 @@ const ItemDetailContainer = () => {
     const { itemId } = useParams();
 
     useEffect(() => {
-        //get product task
-        //wait 2 seconds to resolve
-        //then set items hook and setDataLoaded to remove loading
-        const getProduct = new Promise((resolve, reject) => {
-            setTimeout(() => {
-                let product = productsList.find(product => product.id == itemId);
+        let callback = (doc) => {
+            let data;
 
-                resolve(product);
-            }, 2000);
-        })
-        .then((data) => {
+            if (!doc.exists) {
+                console.log('No results');
+                setDataLoaded(true);
+            }
+            else
+            {
+                data = doc.data();
+                data.id = doc.id;
+            }
+            
+            console.log(data);
             setItem(data);
-            setDataLoaded(true); 
-        });
-    });
+            setDataLoaded(true);
+        };
+
+        if(itemId)
+            itemCollection.doc(itemId).get().then(callback);
+
+    }, [itemId]);
     
 
     return(

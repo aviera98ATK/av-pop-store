@@ -1,5 +1,8 @@
 //modules
+import { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { getFirestore } from './firebase/index.js';
+
 
 //components
 import NavBar from './components/NavBar'
@@ -10,14 +13,42 @@ import Cart from './components/Cart'
 //providers
 import CartProvider from './providers/CartProvider'
 
-//data
-import Categories from './data/Categories.json'
+const db = getFirestore();
+const itemCollection = db.collection('categories');
 
 function App() {
+
+  const[dataLoaded, setDataLoaded] = useState(false);
+  const[categories, setCategories] = useState([]);
+
+
+  //load categories from firestore
+  useEffect(() => {
+    let callback = (querySnapshot) => {
+      if (querySnapshot.size === 0) {
+          console.log('No categories');
+          setDataLoaded(true);
+      }
+    
+      console.log(querySnapshot);
+      setCategories(querySnapshot.docs.map(doc => {
+          let data = doc.data();
+          data.id = doc.id;
+  
+          return data;
+      }));
+      
+      setDataLoaded(true);
+    };
+    
+    itemCollection.get().then(callback);
+  }, []);
+  
+
   return (
     <CartProvider>
       <BrowserRouter> 
-        <NavBar categories={Categories} />
+        <NavBar categories={categories} />
         <Switch> 
           <Route exact path={["/", "/category/:categoryId"]}>
             <ItemListContainer greeting={ <h1>Welcome to AV PopStore!</h1> }/>

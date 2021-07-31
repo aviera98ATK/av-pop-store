@@ -21,16 +21,15 @@ const ItemListContainer = ({ greeting }) => {
         let callback = (querySnapshot) => {
             if (querySnapshot.size === 0) {
                 console.log('No results');
-                setDataLoaded(true);
             }
 
-            console.log(querySnapshot);
             setItems(querySnapshot.docs.map(doc => {
                 let data = doc.data();
                 data.id = doc.id;
 
                 return data;
             }));
+
             setDataLoaded(true);
         };
 

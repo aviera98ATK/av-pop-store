@@ -1,8 +1,6 @@
 import Item from './Item'
 
 const ItemList = ({ items }) => {
-
-
     return(
         <div className="row item-list">
             {

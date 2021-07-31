@@ -20,17 +20,14 @@ const ItemDetailContainer = () => {
         let callback = (doc) => {
             let data;
 
-            if (!doc.exists) {
+            if (!doc.exists)
                 console.log('No results');
-                setDataLoaded(true);
-            }
             else
             {
                 data = doc.data();
                 data.id = doc.id;
             }
             
-            console.log(data);
             setItem(data);
             setDataLoaded(true);
         };

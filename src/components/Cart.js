@@ -1,8 +1,12 @@
+//modules
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import M from 'materialize-css'
+
+//firebase
 import { getFirestore } from './../firebase/index.js';
 
+//context
 import CartContext from './../context/CartContext';
 
 const db = getFirestore();
@@ -14,17 +18,19 @@ const Cart = () => {
     const[totalPrice, setTotalPrice] = useState(0);
     const[pageLoaded, setPageLoaded] = useState(false);
 
+    //buy form hooks
     const[fullName, setFullName] = useState("");
     const[email, setEmail] = useState("");
     const[phone, setPhone] = useState("");
     const[formMsg, setFormMsg] = useState("");
+
 
     const[orderId, setOrderId] = useState("");
     
 
     useEffect(() => {
         let sum = 0;
-        cart.map(obj => {
+        cart.forEach(obj => {
             sum += (obj.item.price * obj.quantity);
         });
 
@@ -37,7 +43,7 @@ const Cart = () => {
 
             setPageLoaded(true);
         }
-    }, [cart]);
+    }, [cart, pageLoaded]);
 
     const removeItemHandler = (id) => {
         removeItem(id);
@@ -46,27 +52,6 @@ const Cart = () => {
     const clearCartHandler = () => {
         clearCart();
     }
-
-    const sendOrder = (order, callback) => {
-        //do insert on firebase
-        itemCollection.add(order)
-        .then((res) => {
-            let elem = document.getElementById("order-info-modal");
-            let modalInstance = M.Modal.getInstance(elem);
-
-            console.log(`Order added with Id: ${res.id}`);
-            setOrderId(res.id);
-            clearCart();
-            setFullName("");
-            setEmail("");
-            setPhone("");
-            callback();
-            modalInstance.open();
-        })
-        .catch((error) => {
-            console.error(`Error adding order: ${error}`);
-        });
-    };
 
     const sendBuyerInfo = () => {
         let elem = document.getElementById("buyer-info-modal");
@@ -85,7 +70,6 @@ const Cart = () => {
             setFormMsg("Email is not valid. Please insert a valid email.");
             return;
         }
-            
 
         //check if phone number is only numbers
         if(!numberPattern.test(phone))
@@ -109,13 +93,37 @@ const Cart = () => {
                 'phone': phone
             },
             'items': items,
-            //date
+            'date': Date.now(),
             'total': totalPrice
         }
 
         sendOrder(order, () => { modalInstance.close() });
         return null;
     }
+
+    const sendOrder = (order, callback) => {
+        //do insert on firebase
+        itemCollection.add(order)
+        .then((res) => {
+            let elem = document.getElementById("order-info-modal");
+            let modalInstance = M.Modal.getInstance(elem);
+
+            setOrderId(res.id);
+
+            //clear all
+            clearCart();
+            setFullName("");
+            setEmail("");
+            setPhone("");
+
+            callback();
+
+            modalInstance.open();
+        })
+        .catch((error) => {
+            console.error(`Error adding order: ${error}`);
+        });
+    };
 
     const closeOrderInfo = () => {
         let elem = document.getElementById("order-info-modal");
@@ -131,9 +139,8 @@ const Cart = () => {
             <div className="row">
                 <div className="col s12 m12 text-center">
                     <h1>Finish Your Buy</h1>
-                    
                 </div>
-
+                
                 <div id="order-info-modal" className="modal">
                     <div className="modal-content">
                         <div className="row">
@@ -148,7 +155,7 @@ const Cart = () => {
                         </div>
                     </div>
                     <div className="modal-footer">
-                        <button onClick={ closeOrderInfo } className="waves-effect waves-green btn">Send</button>
+                        <button onClick={ closeOrderInfo } className="waves-effect waves-green btn">Finish</button>
                     </div>
                 </div>
 

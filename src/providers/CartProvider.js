@@ -1,5 +1,5 @@
 //dependencies
-import { useState, createContext } from "react";
+import { useState } from "react";
 
 //context
 import CartContext from './../context/CartContext'
@@ -10,8 +10,6 @@ const CartProvider = ({ defaultValue = [] , children}) =>
 
     function addItem(item, quantity)
     {
-        console.log(`addItemCalled`);
-
         if(isInCart(item.id))
         {
             let items = [...cart];
@@ -20,31 +18,24 @@ const CartProvider = ({ defaultValue = [] , children}) =>
 
             setCart(items);
 
-            console.log(`Updated item [${item.title}] from cart. New quantity: [${items[index].quantity}]`)
-
             return;
         }
-
-        console.log(`add item to cart`, item);
 
         setCart([...cart, { item: item, quantity: quantity }]);
     }
 
     function removeItem(id)
     {
-        console.log("call remoteItem");
         let filteredItems = cart.filter(obj => obj.item.id !== id);
 
-        console.log(filteredItems);
         setCart(filteredItems);
     }
 
     function isInCart(id)
     {
-        console.log(`isInCart called for item Id [${id}]`);
         let isIn = false;
         
-        if(id != undefined)
+        if(id !== undefined)
             isIn = cart.find(obj => obj.item.id === id);
 
         return (isIn === undefined) ? false : isIn;
